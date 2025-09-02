@@ -1,0 +1,36 @@
+name: Deploy Verduleria
+
+on:
+  push:
+    branches: [ main ]
+
+concurrency:
+  group: deploy-verduleria
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # (Optional) If you need to build, add a step here
+      # - run: npm run build   or hugo, vite, etc.
+
+      - name: Add server host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p 2222 okla.cl >> ~/.ssh/known_hosts
+
+      - name: Deploy via rsync
+        uses: burnett01/rsync-deployments@v7.0.1
+        with:
+          switches: -avzr --delete
+          path: ./                # change to ./dist or ./public if you build
+          remote_path: /www/verduleria/public/
+          remote_host: okla.cl
+          remote_user: deployer
+          remote_port: 2222
+          remote_key: ${{ secrets.DEPLOY_KEY }}
