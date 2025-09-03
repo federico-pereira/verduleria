@@ -15,6 +15,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Generate cache-busting version
+        run: |
+          TIMESTAMP=$(date +%s)
+          echo "VERSION=$TIMESTAMP" >> $GITHUB_ENV
+          sed -i "s/style.css/style.css?v=$TIMESTAMP/g" index.html
+
       - name: Prepare SSH
         shell: bash
         run: |
@@ -22,21 +28,29 @@ jobs:
           mkdir -p "$HOME/.ssh"
           echo "${{ secrets.DEPLOY_KEY }}" > "$HOME/.ssh/id_ed25519"
           chmod 600 "$HOME/.ssh/id_ed25519"
-          # Use your DDNS host OR a DNS-only subdomain (deploy.okla.cl)
           ssh-keyscan -p 2222 oklahost.ddns.net >> "$HOME/.ssh/known_hosts"
-          # Optional: show versions for debugging
-          ssh -V
-          rsync --version
 
       - name: Deploy via rsync
         shell: bash
         env:
-          SSH_HOST: oklahost.ddns.net   # or deploy.okla.cl (DNS-only)
+          SSH_HOST: oklahost.ddns.net
           SSH_PORT: "2222"
           SSH_USER: deployer
-          LOCAL_PATH: ./                # change to ./dist if you build
+          LOCAL_PATH: ./
           REMOTE_PATH: /www/verduleria/public/
         run: |
           rsync -azv --delete \
             -e "ssh -i $HOME/.ssh/id_ed25519 -p ${SSH_PORT}" \
             "${LOCAL_PATH}" "${SSH_USER}@${SSH_HOST}:${REMOTE_PATH}"
+
+      - name: Fix permissions
+        shell: bash
+        env:
+          SSH_HOST: oklahost.ddns.net
+          SSH_PORT: "2222"
+          SSH_USER: deployer
+        run: |
+          ssh -i "$HOME/.ssh/id_ed25519" -p ${SSH_PORT} ${SSH_USER}@${SSH_HOST} \
+            "sudo chown -R deployer:www-data /www/verduleria && \
+             sudo find /www/verduleria -type d -exec chmod 755 {} \; && \
+             sudo find /www/verduleria -type f -exec chmod 644 {} \;"
