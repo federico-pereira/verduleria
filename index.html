@@ -1,38 +1,58 @@
-<!DOCTYPE html>
-<html lang="es">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verdulería Fresca</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HuertoHogar — Fresh, local produce delivered</title>
+
+  <!-- Local stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Local JavaScript -->
+  <script defer src="js/main.js"></script>
 </head>
 <body>
-    <h1>Verdulería Fresca</h1>
-    
-    <h2>Frutas</h2>
-    <ul>
-        <li>Manzanas - $2.50/kg</li>
-        <li>Plátanos - $1.80/kg</li>
-        <li>Naranjas - $3.00/kg</li>
-        <li>Fresas - $4.50/kg</li>
-        <li>Uvas - $5.00/kg</li>
-    </ul>
-    
-    <h2>Verduras</h2>
-    <ul>
-        <li>Lechuga - $1.50/unidad</li>
-        <li>Tomates - $2.80/kg</li>
-        <li>Zanahorias - $1.20/kg</li>
-        <li>Cebollas - $1.60/kg</li>
-        <li>Papas - $1.40/kg</li>
-    </ul>
-    
-    <h2>Horario de Atención</h2>
-    <p>Lunes a Viernes: 8:00 - 20:00</p>
-    <p>Sábados: 8:00 - 14:00</p>
-    <p>Domingos: Cerrado</p>
-    
-    <h2>Contacto</h2>
-    <p>Teléfono: 555-1234</p>
-    <p>Dirección: Calle Principal 123, Ciudad</p>
+  <!-- Header & navigation -->
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="index.html">HuertoHogar</a>
+      <nav class="nav">
+        <a href="catalog/index.html">Catalog</a>
+        <a href="blog/index.html">Blog</a>
+        <a href="about/index.html">About</a>
+        <a href="cart/index.html">Cart</a>
+        <a href="profile/index.html">Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="home-hero container">
+    <!-- Hero section -->
+    <section class="hero">
+      <h1>Fresh from the field to your door</h1>
+      <p>Fruits, vegetables, organics and more — sourced locally across Chile.</p>
+      <p><a class="btn" href="catalog/index.html">Shop the catalog</a></p>
+    </section>
+
+    <!-- Highlights -->
+    <section class="highlights grid">
+      <article>
+        <h2>Local & Sustainable</h2>
+        <p>We partner with regional producers and highlight sustainable practices.</p>
+      </article>
+      <article>
+        <h2>Weekly Specials</h2>
+        <p>Discover seasonal picks and promotions with the best freshness.</p>
+      </article>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <small>&copy; <span id="year"></span> HuertoHogar — Fresh from the field.</small>
+    </div>
+  </footer>
 </body>
 </html>
