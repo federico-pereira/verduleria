@@ -1,100 +1,121 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HuertoHogar — Frescura del campo</title>
-  <link rel="stylesheet" href="assets/styles/style.css">
-</head>
-<body>
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="logo" href="index.html">
-        <img src="assets/img/logo.jpg" alt="HuertoHogar">
-        <span>HuertoHogar</span>
-      </a>
-      <nav class="nav">
-        <a href="catalog/index.html">Catálogo</a>
-        <a href="about/index.html">Nosotros</a>
-        <a href="login/index.html">Ingresar</a>
-        <a href="cart/index.html">Carrito</a>
-      </nav>
-    </div>
-  </header>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HuertoHogar — Frescura del campo</title>
+    <link rel="stylesheet" href="assets/styles/style.css" />
+  </head>
+  <body>
+    <!-- div site, arregla footer siempre al final -->
+    <div class="site"> 
+      <!-- Header -->
+      <header class="site-header">
+        <div class="container header-inner">
+          <a class="logo" href="index.html">
+            <img src="assets/img/logo.jpg" alt="HuertoHogar" />
+            <span>HuertoHogar</span>
+          </a>
+          <nav class="nav">
+            <a href="catalog/index.html">Catálogo</a>
+            <a href="about/index.html">Nosotros</a>
+            <a href="login/index.html">Ingresar</a>
+            <a href="cart/index.html">Carrito</a>
+          </nav>
+        </div>
+      </header>
 
-<!-- Hero -->
-  <section class="hero">
-    <div class="container hero-inner">
-      <div class="hero-copy">
-        <h1>Frescura y calidad del campo a tu mesa</h1>
-        <p>Frutas, verduras y productos orgánicos seleccionados. Envíos a múltiples ciudades de Chile.</p>
-        <a class="btn btn-primary" href="catalog/index.html">Ver catálogo</a>
-      </div>
-      <div class="hero-media" role="img" aria-label="Productos frescos"></div>
-    </div>
-  </section>
+      <!-- Hero -->
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <h1>Frescura y calidad del campo a tu mesa</h1>
+            <p>
+              Frutas, verduras y productos orgánicos seleccionados. Envíos a
+              múltiples ciudades de Chile.
+            </p>
+            <a class="btn btn-primary" href="catalog/index.html"
+              >Ver catálogo</a
+            >
+          </div>
+          <div
+            class="hero-media"
+            role="img"
+            aria-label="Productos frescos"
+          ></div>
+        </div>
+      </section>
 
-  <!-- Destacados -->
-  <section class="container section">
-    <header class="section-header">
-      <h2>Productos destacados</h2>
-      <a class="link" href="catalog/index.html">Ver todo</a>
-    </header>
-    <div class="product-grid">
-      <!-- Solo ejemplos estáticos -->
-      <article class="card">
-        <div class="card-media">
-          <img src="assets/img/manzana_fuji.jpg" alt="Manzanas Fuji frescas">
+      <!-- Destacados -->
+      <section class="container section">
+        <header class="section-header">
+          <h2>Productos destacados</h2>
+          <a class="link" href="catalog/index.html">Ver todo</a>
+        </header>
+        <div class="product-grid">
+          <!-- Solo ejemplos estáticos -->
+          <article class="card">
+            <div class="card-media">
+              <img
+                src="assets/img/manzana_fuji.jpg"
+                alt="Manzanas Fuji frescas"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-title">Manzanas Fuji</div>
+              <div class="card-meta">Valle del Maule</div>
+              <div class="price">$1.200 CLP / kg</div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-media">
+              <img
+                src="assets/img/naranja_valencia.jpg"
+                alt="Naranjas Valencia"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-title">Naranjas Valencia</div>
+              <div class="card-meta">Chile</div>
+              <div class="price">$1.000 CLP / kg</div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-media">
+              <img
+                src="assets/img/platano_cavendish.jpg"
+                alt="Plátanos Cavendish"
+              />
+            </div>
+            <div class="card-body">
+              <div class="card-title">Plátanos Cavendish</div>
+              <div class="card-meta">Chile</div>
+              <div class="price">$800 CLP / kg</div>
+            </div>
+          </article>
         </div>
-        <div class="card-body">
-          <div class="card-title">Manzanas Fuji</div>
-          <div class="card-meta">Valle del Maule</div>
-          <div class="price">$1.200 CLP / kg</div>
-        </div>
-      </article>
-      <article class="card">
-        <div class="card-media">
-          <img src="assets/img/naranja_valencia.jpg" alt="Naranjas Valencia" >
-        </div>
-        <div class="card-body">
-          <div class="card-title">Naranjas Valencia</div>
-          <div class="card-meta">Chile</div>
-          <div class="price">$1.000 CLP / kg</div>
-        </div>
-      </article>
-      <article class="card">
-        <div class="card-media">
-          <img src="assets/img/platano_cavendish.jpg" alt="Plátanos Cavendish">
-        </div>
-        <div class="card-body">
-          <div class="card-title">Plátanos Cavendish</div>
-          <div class="card-meta">Chile</div>
-          <div class="price">$800 CLP / kg</div>
-        </div>
-      </article>
-    </div>
-  </section>
+      </section>
 
-  <!-- Categorías -->
-  <section class="container section">
-    <header class="section-header">
-      <h2>Categorías</h2>
-    </header>
-    <div class="chip-row">
-      <span class="chip">Frutas Frescas</span>
-      <span class="chip">Verduras Orgánicas</span>
-      <span class="chip">Productos Orgánicos</span>
-      <span class="chip">Productos Lácteos</span>
-    </div>
-  </section>
+      <!-- Categorías -->
+      <section class="container section">
+        <header class="section-header">
+          <h2>Categorías</h2>
+        </header>
+        <div class="chip-row">
+          <span class="chip">Frutas Frescas</span>
+          <span class="chip">Verduras Orgánicas</span>
+          <span class="chip">Productos Orgánicos</span>
+          <span class="chip">Productos Lácteos</span>
+        </div>
+      </section>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <small>© 2025 HuertoHogar · Sitio académico</small>
-      <small><a href="about/index.html#mapa">Tiendas y mapa</a></small>
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          <small>© 2025 HuertoHogar · Sitio académico</small>
+          <small><a href="about/index.html#mapa">Tiendas y mapa</a></small>
+        </div>
+      </footer>
     </div>
-  </footer>
-</body>
+  </body>
 </html>
