@@ -183,6 +183,10 @@ body {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: var(--shadow);
+
+  display: block;
+  text-decoration: none;
+  color: inherit;
 }
 
 .card-media {
