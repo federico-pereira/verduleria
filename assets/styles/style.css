@@ -242,7 +242,7 @@ body {
 }
 
 /* --- Login css /Needs to be centered/ --- */
-.login-container {
+.login-container, #register_ver {
   background-color: white;
   margin: auto;
   padding: 10px;
@@ -251,13 +251,17 @@ body {
   width: 300px;
 }
 
-.login-container input[type="text"], input[type="password"] {
+.login-container input[type="text"], input[type="password"], #test {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+}
+
+#test {
+  display: flex;
 }
 
 .login-container input[type="submit"] {
@@ -279,6 +283,11 @@ body {
   text-align: center;
   margin-bottom: 20px;
 }
+
+#register_ver {
+  width: 800px;
+}
+
 
 /* --- Responsive --- */
 @media (max-width: 820px) {
