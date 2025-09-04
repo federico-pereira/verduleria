@@ -121,11 +121,23 @@ body {
   margin-bottom: 1rem;
 }
 
-.hero-media {
+.hero-media, #about, #mision, #vision {
   min-height: 240px;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   background: url('../img/hero.jpg') center/cover no-repeat;
+}
+
+#about {
+  background: url('../img/SobreNosotros.jpg') center/cover no-repeat;
+}
+
+#mision {
+  background: url('../img/misionAgricultura.jpg') center/cover no-repeat;
+}
+
+#vision {
+  background: url('../img/visionStock.jpg')
 }
 
 /* --- Botones y enlaces --- */
@@ -283,6 +295,15 @@ body {
   text-align: center;
   margin-bottom: 20px;
 }
+
+/* --- Responsive --- */
+@media (max-width: 820px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    padding: 2rem 0;
+  }
+}
+
 
 /* --- Responsive --- */
 @media (max-width: 820px) {
