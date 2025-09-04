@@ -18,6 +18,14 @@
   box-sizing: border-box;
 }
 
+/* Footer fix */
+.site {
+    min-height: 100dvh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: minmax(0, 1fr); /* No es necesario pero igual*/
+}
+
 body {
   font-family: 'Montserrat', Arial, sans-serif; /* Fuente principal */
   background: var(--bg);
@@ -236,7 +244,8 @@ body {
 /* --- Login css /Needs to be centered/ --- */
 .login-container {
   background-color: white;
-  padding: 30px;
+  margin: auto;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 300px;
