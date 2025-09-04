@@ -31,26 +31,13 @@ jobs:
           ssh-keyscan -p 2222 oklahost.ddns.net >> "$HOME/.ssh/known_hosts"
 
       - name: Deploy via rsync
-        shell: bash
-        env:
-          SSH_HOST: oklahost.ddns.net
-          SSH_PORT: "2222"
-          SSH_USER: deployer
-          LOCAL_PATH: ./
-          REMOTE_PATH: /www/verduleria/public/
-        run: |
-          rsync -azv --delete \
-            -e "ssh -i $HOME/.ssh/id_ed25519 -p ${SSH_PORT}" \
-            "${LOCAL_PATH}" "${SSH_USER}@${SSH_HOST}:${REMOTE_PATH}"
 
-      - name: Fix permissions
-        shell: bash
-        env:
-          SSH_HOST: oklahost.ddns.net
-          SSH_PORT: "2222"
-          SSH_USER: deployer
-        run: |
-          ssh -i "$HOME/.ssh/id_ed25519" -p ${SSH_PORT} ${SSH_USER}@${SSH_HOST} \
-            "sudo chown -R deployer:www-data /www/verduleria && \
-             sudo find /www/verduleria -type d -exec chmod 755 {} \; && \
-             sudo find /www/verduleria -type f -exec chmod 644 {} \;"
+        uses: burnett01/rsync-deployments@v7
+        with:
+          switches: -avzr --delete --chmod=D755,F644 --chown=deployer:www-data
+          path: ./
+          remote_path: /www/verduleria/public/
+          remote_host: okla.cl
+          remote_user: deployer
+          remote_port: 2222
+          remote_key: ${{ secrets.DEPLOY_KEY }}
