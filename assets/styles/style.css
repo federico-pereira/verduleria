@@ -597,3 +597,17 @@ body {
   .p-thumbs { grid-auto-flow: column; grid-auto-columns: 90px; overflow-x: auto; }
   .p-viewer { aspect-ratio: 4 / 3; }
 }
+
+.hover-video {
+  display: inline-block;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.hover-video video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  height: auto;
+  cursor: pointer;
+}
