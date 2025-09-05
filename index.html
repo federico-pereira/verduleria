@@ -60,33 +60,29 @@
 
       </section>
 
-      <section class="hero">
 
-        <div class="container hero-inner">
+      <!-- Direccion -->
+      <section class="hero">
+        <div class="container hero-inner"
+            onmouseenter="heroPlay(this)"
+            onmouseleave="heroStop(this)">
           <div class="hover-video">
-            <video
+            <video id="heroVideo"
               loop
               muted
               playsinline
               preload="auto"
-              poster="assets/img/delivery.jpg"
-              onmouseover="this.play()"
-              onmouseout="this.pause(); this.currentTime = 0;"
-            >
-              <source src="assets/video/delivery.mp4"  type="video/mp4">
+              poster="assets/img/delivery.jpg">
+              <source src="assets/video/delivery.mp4" type="video/mp4">
             </video>
           </div>
+
           <div class="hero-copy">
             <h1>Transporte a todos los rincones de Chile</h1>
-            <p>
-              Envio gratuito a pedidos sobre $100.000clp.
-            </p>
-            <a class="btn btn-primary" href="catalog/categories/fruits.html"
-              >Ingresar direcci</a
-            >
+            <p>Envio gratuito a pedidos sobre $100.000clp.</p>
+            <a class="btn btn-primary" href="address/index.html">Dónde Estamos?</a>
           </div>
         </div>
-        
       </section>
 
       <!-- Categorías -->
@@ -172,6 +168,8 @@
       </footer>
     </div>
 
+
+    <script src="assets/js/hero-video.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   
   </body>
