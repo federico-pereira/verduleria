@@ -1,29 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>HuertoHogar — Frescura del campo</title>
-    <link rel="stylesheet" href="assets/styles/style.css" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HuertoHogar - Catálogo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- Link to your custom CSS -->
+    <link rel="stylesheet" href="assets/styles/style.css">
   </head>
+      
   <body>
-    <!-- div site, arregla footer siempre al final -->
     <div class="site"> 
-      <!-- Header -->
-      <header class="site-header">
-        <div class="container header-inner">
-          <a class="logo" href="index.html">
-            <img src="assets/img/logo.jpg" alt="HuertoHogar" />
-            <span>HuertoHogar</span>
-          </a>
-          <nav class="nav">
-            <a href="catalog/index.html">Catálogo</a>
-            <a href="about/index.html">Nosotros</a>
-            <a href="login/index.html">Ingresar</a>
-            <a href="cart/index.html">Carrito</a>
-          </nav>
-        </div>
-      </header>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="index.html">
+          <img src="assets/img/logo.jpg" alt="HuertoHogar" />
+          <span>HuertoHogar</span>
+        </a>
+        <nav class="nav">
+          <!-- Catalog Dropdown -->
+          <div class="dropdown">
+            <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Catálogo
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="catalog/categories/fruits.html">Frutas Frescas</a></li>
+              <li><a class="dropdown-item" href="catalog/categories/vegetables.html">Verduras Orgánicas</a></li>
+              <li><a class="dropdown-item" href="catalog/categories/organics.html">Productos Orgánicos</a></li>
+              <li><a class="dropdown-item" href="catalog/categories/dairy.html">Productos Lácteos</a></li>
+            </ul>
+          </div>
+          
+          <a href="about/index.html">Nosotros</a>
+          <a href="login/index.html">Ingresar</a>
+          <a href="cart/index.html">Carrito</a>
+        </nav>
+      </div>
+    </header>
 
       <section class="hero">
         <div class="container hero-inner">
@@ -33,7 +46,7 @@
               Frutas, verduras y productos orgánicos seleccionados. Envíos a
               múltiples ciudades de Chile.
             </p>
-            <a class="btn btn-primary" href="..catalog/index.html"
+            <a class="btn btn-primary" href="catalog/categories/fruits.html"
               >Ver catálogo</a
             >
           </div>
@@ -101,10 +114,10 @@
           <h2>Categorías</h2>
         </header>
         <div class="chip-row">
-          <span class="chip">Frutas Frescas</span>
-          <span class="chip">Verduras Orgánicas</span>
-          <span class="chip">Productos Orgánicos</span>
-          <span class="chip">Productos Lácteos</span>
+          <a href="catalog/categories/fruits.html" class="chip">Frutas Frescas</a>
+          <a href="catalog/categories/vegetables.html" class="chip">Verduras Orgánicas</a>
+          <a href="catalog/categories/organics.html" class="chip">Productos Orgánicos</a>
+          <a href="catalog/categories/dairy.html" class="chip">Productos Lácteos</a>
         </div>
       </section>
 
@@ -116,5 +129,8 @@
         </div>
       </footer>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  
   </body>
 </html>
