@@ -16,12 +16,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Generate cache-busting version
+      # Cache-busting: versiona el href de assets/styles/style.css en TODOS los .html
+      - name: Cache-bust CSS links (content hash)
+        shell: bash
         run: |
-          TIMESTAMP=$(date +%s)
-          echo "VERSION=$TIMESTAMP" >> $GITHUB_ENV
-          # Update CSS reference with cache-busting parameter
-          sed -i 's/href="\/assets\/styles\/style.css"/href="\/assets\/styles\/style.css?v='"$TIMESTAMP"'"/g' index.html
+          set -euo pipefail
+          VER=$(md5sum assets/styles/style.css | awk '{print $1}')
+          echo "VERSION=$VER" >> "$GITHUB_ENV"
+          # Reemplaza o agrega ?v= en cualquier href a assets/styles/style.css (comillas simples o dobles)
+          find . -type f -name '*.html' -print0 \
+            | xargs -0 sed -i -E "s|(href=[\"'][^\"']*assets/styles/style\.css)(\?v=[^\"']*)?([\"'])|\\1?v=${VER}\\3|g"
 
       - name: Prepare SSH
         shell: bash
@@ -35,10 +39,10 @@ jobs:
       - name: Deploy via rsync
         shell: bash
         env:
-          SSH_HOST: oklahost.ddns.net  
+          SSH_HOST: oklahost.ddns.net
           SSH_PORT: "2222"
           SSH_USER: deployer
-          LOCAL_PATH: ./                
+          LOCAL_PATH: ./
           REMOTE_PATH: /www/verduleria/public/
         run: |
           rsync -azv --delete \
