@@ -26,14 +26,14 @@
   </header>
 
   <!-- Login Básico --> 
-    <!-- Falta centrar -->
     <div class="login-container">
         <h2>Login</h2>
-        <form action="#" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
+        <form id="loginForm">
+            <input type="text" name="username" id="username" placeholder="Username" required>
+            <input type="password" name="password" id="password" placeholder="Password" required>
             <a href="../register/index.html">¿No tiene cuenta? Registrar</a>
             <input type="submit" value="Login">
+            <div id="result"></div>
             
         </form>
     </div>
@@ -46,6 +46,9 @@
     </div>
   </footer>
   </div>
+
+
+    <script src="../assets/js/login.js"></script>
 
 </body>
 </html>
