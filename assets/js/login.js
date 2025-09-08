@@ -1,4 +1,5 @@
 document.getElementById("loginForm").addEventListener("submit", function(event) {
+
     event.preventDefault(); 
 
     const username = XSSCheck(document.getElementById("username").value.trim());

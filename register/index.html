@@ -4,40 +4,67 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="../assets/styles/style.css" />
   </head>
   <body>
-    <!-- div footer fix -->
-    <div class="site">
-      <!-- Header -->
-      <header class="site-header">
-        <div class="container header-inner">
-          <a class="logo" href="../index.html">
-            <img src="../assets/img/logo.jpg" alt="HuertoHogar" />
-            <span>HuertoHogar</span>
-          </a>
-          <nav class="nav">
-            <a href="../catalog/index.html">Catálogo</a>
-            <a href="../about/index.html">Nosotros</a>
-            <a href="../login/index.html">Ingresar</a>
-            <a href="../cart/index.html">Carrito</a>
-          </nav>
-        </div>
-      </header>
+    
+    <div class="site"> 
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="logo" href="../index.html">
+          <img src="../assets/img/logo.jpg" alt="HuertoHogar" />
+          <span>HuertoHogar</span>
+        </a>
+        <nav class="nav">
+          <!-- Catalog Dropdown -->
+          <div class="dropdown">
+            <button class="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Catálogo
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="../catalog/categories/fruits.html">Frutas Frescas</a></li>
+              <li><a class="dropdown-item" href="../catalog/categories/vegetables.html">Verduras Orgánicas</a></li>
+              <li><a class="dropdown-item" href="../catalog/categories/organics.html">Productos Orgánicos</a></li>
+              <li><a class="dropdown-item" href="../catalog/categories/dairy.html">Productos Lácteos</a></li>
+            </ul>
+          </div>
+          
+          <a href="../about/index.html">Nosotros</a>
+          <a href="../login/index.html">Ingresar</a>
+          <a href="../cart/index.html">Carrito</a>
+        </nav>
+      </div>
+    </header>
 
-        <div class="login-container" id="register_ver">
+        <div class="login-container" id="register">
           <h2>Registro</h2>
-            <form action="#">
-              <label for="username">Ingrese Nombre de usuario:</label>
+            <form id="register-form">
+              <label for="username">Nombre de Usuario:</label>
               <input type="text" name="username" id="username" placeholder="Nombre de usuario" required>
-              <label for="realName">Ingrese su Nombre Completo:</label>
-              <input id="realName" type="text" name="realName" placeholder="Nombre Completo" required>
+
+              <label for="firstName">Nombre:</label>
+              <input id="firstName" type="text" name="firstName" placeholder="Nombre" required>
+
+              <label for="lastName">Apellido:</label>
+              <input id="lastName" type="text" name="lastName" placeholder="Apellido" required>
+
+              <label for="email">Email:</label>
+              <input type="text" id="email" name="email" placeholder="Email" required>
+
+              <label for="start">Fecha de Nacimiento:</label>
+              <input type="date" id="birthday" name="birthday" value="2018-07-22" required/> 
+
               <label for="password">Contraseña:</label>
-              <input type="password" name="password" placeholder="Password" required>
+              <input type="password" id="password" name="password" placeholder="Contraseña" required>
+
               <label for="repeatPassword">Repita Contraseña:</label>
-              <input type="password" name="repeatPassword" placeholder="Repita contraseña" required>
+              <input type="password" id="repeatPassword" name="repeatPassword" placeholder="Repita contraseña" required>
+
               <input type="submit" value="Registrar">
-            
+
+              <div id="result"></div>
+
         </form>
     </div>
 
@@ -49,5 +76,9 @@
         </div>
       </footer>
     </div>
+
+    <script src="../assets/js/register.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
   </body>
 </html>

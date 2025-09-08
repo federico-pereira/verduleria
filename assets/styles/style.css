@@ -321,13 +321,17 @@ body {
 }
 
 /* --- Login css --- */
-.login-container {
+.login-container, #register {
   background-color: white;
-  margin: auto;
+  margin: auto; /* No sé si sería mejor cambiar el margin a algo especifico */
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 300px;
+}
+
+#register { /* Tal vez cambiar width */
+  margin-top: 10px;
 }
 
 .login-container input[type="text"], 
@@ -340,9 +344,20 @@ body {
     font-size: 16px;
 }
 
+.login-container input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
 .login-container input[type="submit"] {
     width: 100%;
     padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
     background-color: #4CAF50;
     color: white;
     border: none;
@@ -359,6 +374,9 @@ body {
   text-align: center;
   margin-bottom: 20px;
 }
+
+
+
 
 /* --- Responsive --- */
 @media (max-width: 820px) {
