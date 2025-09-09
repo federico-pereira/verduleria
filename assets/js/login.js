@@ -2,8 +2,8 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
 
     event.preventDefault(); 
 
-    const username = XSSCheck(document.getElementById("username").value.trim());
-    const password = XSSCheck(document.getElementById("password").value.trim());
+    const username = XSSCheck(document.getElementById("username").value);
+    const password = XSSCheck(document.getElementById("password").value);
     const resultElement = document.getElementById("result");
 
     resultElement.textContent = ""; // Reset de mensaje
@@ -29,15 +29,15 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
         }
     
     if (username == validUsername && password == validPassword) {
-        console.log("Success");
         resultElement.textContent = "Login valido, volviendo al menu principal";
         resultElement.style.color = "green";
         setTimeout(function() {
             window.location.replace("../index.html");
         }, 5000); // 5 segundos de delay para ver el mensaje
 
-
-
+    } else {
+        resultElement.textContent = "Login invalido, usuario y/o contraseña incorrecta";
+        resultElement.style.color = "red";
     }
 
 });

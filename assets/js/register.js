@@ -2,12 +2,12 @@ document.getElementById("register-form").addEventListener("submit", function(eve
 
     event.preventDefault(); 
 
-    const username = XSSCheck(document.getElementById('username').value.trim());
-    const password = XSSCheck(document.getElementById('password').value.trim());
-    const repeatPassword = XSSCheck(document.getElementById('repeatPassword').value.trim());
-    const firstName = XSSCheck(document.getElementById('firstName').value.trim());
-    const lastName = XSSCheck(document.getElementById('lastName').value.trim());
-    const email = XSSCheck(document.getElementById('email').value.trim());
+    const username = XSSCheck(document.getElementById('username').value);
+    const password = XSSCheck(document.getElementById('password').value);
+    const repeatPassword = XSSCheck(document.getElementById('repeatPassword').value);
+    const firstName = XSSCheck(document.getElementById('firstName').value);
+    const lastName = XSSCheck(document.getElementById('lastName').value);
+    const email = XSSCheck(document.getElementById('email').value);
     const dateControl = document.querySelector('input[type="date"]');
     const resultElement = document.getElementById("result");
 
@@ -22,7 +22,7 @@ document.getElementById("register-form").addEventListener("submit", function(eve
     
     const today = new Date();
     const yearsAgo = new Date();
-    yearsAgo.setFullYear(today.getFullYear() - 100); // No se cual sería una buena fecha minima
+    yearsAgo.setFullYear(today.getFullYear() - 100);
     today.setHours(0, 0, 0, 0);
 
     if (!usernameRegex.test(username)) {
