@@ -1,4 +1,4 @@
-name: Deploy Verduleria (Source Upload)
+name: Deploy Verduleria
 
 on:
   push:
@@ -13,18 +13,27 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # Ignore node_modules and coverage (just in case)
-      - name: Clean up unnecessary folders
+      # 🧩 Setup Node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # 📦 Install dependencies (clean)
+      - name: Install dependencies
+        run: npm ci
+
+      # ⚙️ Build React app (with react-app-rewired)
+      - name: Build React app
         run: |
-          rm -rf node_modules
-          rm -rf coverage
-          rm -rf build
+          npm install --save-dev react-app-rewired
+          npm run build
 
       # =========================
-      # 🔹 DEPLOY TO OKLAHOST
+      # 🔹 DEPLOY TO OKLAHOST (Optional)
       # =========================
       - name: Prepare SSH (oklahost)
         run: |
@@ -38,13 +47,10 @@ jobs:
           SSH_HOST: oklahost.ddns.net
           SSH_PORT: "2222"
           SSH_USER: deployer
-          LOCAL_PATH: ./
-          REMOTE_PATH: /www/verduleria/src/
+          LOCAL_PATH: ./build/
+          REMOTE_PATH: /www/verduleria/public/
         run: |
           rsync -azv --delete \
-            --exclude '.git*' \
-            --exclude 'node_modules' \
-            --exclude 'coverage' \
             --chown=deployer:www-data \
             --chmod=D755,F644 \
             -e "ssh -i $HOME/.ssh/id_okla -p ${SSH_PORT}" \
@@ -65,13 +71,10 @@ jobs:
           SSH_HOST: 98.81.244.154
           SSH_PORT: "22"
           SSH_USER: ubuntu
-          LOCAL_PATH: ./
+          LOCAL_PATH: ./build/
           REMOTE_PATH: /var/www/verduleria/
         run: |
           rsync -azv --delete \
-            --exclude '.git*' \
-            --exclude 'node_modules' \
-            --exclude 'coverage' \
             --chown=www-data:www-data \
             --chmod=D755,F644 \
             -e "ssh -i $HOME/.ssh/id_aws -p ${SSH_PORT}" \
