@@ -16,27 +16,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Cache-busting: versiona el href de assets/styles/style.css en TODOS los .html
+      # 🧩 Cache-busting del CSS
       - name: Cache-bust CSS links (content hash)
         shell: bash
         run: |
           set -euo pipefail
           VER=$(md5sum assets/styles/style.css | awk '{print $1}')
           echo "VERSION=$VER" >> "$GITHUB_ENV"
-          # Reemplaza o agrega ?v= en cualquier href a assets/styles/style.css (comillas simples o dobles)
           find . -type f -name '*.html' -print0 \
             | xargs -0 sed -i -E "s|(href=[\"'][^\"']*assets/styles/style\.css)(\?v=[^\"']*)?([\"'])|\\1?v=${VER}\\3|g"
 
-      - name: Prepare SSH
+      # =========================
+      # 🔹 DEPLOY TO OKLAHOST
+      # =========================
+      - name: Prepare SSH (oklahost)
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p "$HOME/.ssh"
-          echo "${{ secrets.DEPLOY_KEY }}" > "$HOME/.ssh/id_ed25519"
-          chmod 600 "$HOME/.ssh/id_ed25519"
+          echo "${{ secrets.DEPLOY_KEY }}" > "$HOME/.ssh/id_okla"
+          chmod 600 "$HOME/.ssh/id_okla"
           ssh-keyscan -p 2222 oklahost.ddns.net >> "$HOME/.ssh/known_hosts"
 
-      - name: Deploy via rsync
+      - name: Deploy via rsync (oklahost)
         shell: bash
         env:
           SSH_HOST: oklahost.ddns.net
@@ -48,5 +50,32 @@ jobs:
           rsync -azv --delete \
             --chown=deployer:www-data \
             --chmod=D755,F644 \
-            -e "ssh -i $HOME/.ssh/id_ed25519 -p ${SSH_PORT}" \
+            -e "ssh -i $HOME/.ssh/id_okla -p ${SSH_PORT}" \
+            "${LOCAL_PATH}" "${SSH_USER}@${SSH_HOST}:${REMOTE_PATH}"
+
+      # =========================
+      # 🔹 DEPLOY TO AWS SERVER
+      # =========================
+      - name: Prepare SSH (AWS)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$HOME/.ssh"
+          echo "${{ secrets.DEPLOY_KEY_AWS }}" > "$HOME/.ssh/id_aws"
+          chmod 600 "$HOME/.ssh/id_aws"
+          ssh-keyscan -p 22 98.81.244.154 >> "$HOME/.ssh/known_hosts"
+
+      - name: Deploy via rsync (AWS)
+        shell: bash
+        env:
+          SSH_HOST: 98.81.244.154
+          SSH_PORT: "22"
+          SSH_USER: ubuntu
+          LOCAL_PATH: ./
+          REMOTE_PATH: /var/www/verduleria/
+        run: |
+          rsync -azv --delete \
+            --chown=www-data:www-data \
+            --chmod=D755,F644 \
+            -e "ssh -i $HOME/.ssh/id_aws -p ${SSH_PORT}" \
             "${LOCAL_PATH}" "${SSH_USER}@${SSH_HOST}:${REMOTE_PATH}"
