@@ -1,4 +1,4 @@
-name: Deploy Verduleria
+name: Deploy Verduleria (React)
 
 on:
   push:
@@ -13,12 +13,28 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 🧩 Configura Node y cachea dependencias
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # 📦 Instala dependencias
+      - name: Install dependencies
+        run: npm ci
+
+      # 🏗️ Compila el proyecto React (salida en /build)
+      - name: Build React app
+        run: npm run build
 
       # =========================
       # 🔹 DEPLOY TO OKLAHOST
       # =========================
       - name: Prepare SSH (oklahost)
-        shell: bash
         run: |
           set -euo pipefail
           mkdir -p "$HOME/.ssh"
@@ -27,12 +43,11 @@ jobs:
           ssh-keyscan -p 2222 oklahost.ddns.net >> "$HOME/.ssh/known_hosts"
 
       - name: Deploy via rsync (oklahost)
-        shell: bash
         env:
           SSH_HOST: oklahost.ddns.net
           SSH_PORT: "2222"
           SSH_USER: deployer
-          LOCAL_PATH: ./
+          LOCAL_PATH: ./build/
           REMOTE_PATH: /www/verduleria/public/
         run: |
           rsync -azv --delete \
@@ -45,7 +60,6 @@ jobs:
       # 🔹 DEPLOY TO AWS SERVER
       # =========================
       - name: Prepare SSH (AWS)
-        shell: bash
         run: |
           set -euo pipefail
           mkdir -p "$HOME/.ssh"
@@ -54,12 +68,11 @@ jobs:
           ssh-keyscan -p 22 98.81.244.154 >> "$HOME/.ssh/known_hosts"
 
       - name: Deploy via rsync (AWS)
-        shell: bash
         env:
           SSH_HOST: 98.81.244.154
           SSH_PORT: "22"
           SSH_USER: ubuntu
-          LOCAL_PATH: ./
+          LOCAL_PATH: ./build/
           REMOTE_PATH: /var/www/verduleria/
         run: |
           rsync -azv --delete \
