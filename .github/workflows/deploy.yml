@@ -30,7 +30,7 @@ jobs:
       - name: Build React app
         run: |
           npm install --save-dev react-app-rewired
-          npm run build
+          CI=false npm run build
 
       # =========================
       # 🔹 DEPLOY TO OKLAHOST (Optional)
