@@ -13,18 +13,6 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # 🧩 Cache-busting del CSS
-      - name: Cache-bust CSS links (content hash)
-        shell: bash
-        run: |
-          set -euo pipefail
-          VER=$(md5sum assets/styles/style.css | awk '{print $1}')
-          echo "VERSION=$VER" >> "$GITHUB_ENV"
-          find . -type f -name '*.html' -print0 \
-            | xargs -0 sed -i -E "s|(href=[\"'][^\"']*assets/styles/style\.css)(\?v=[^\"']*)?([\"'])|\\1?v=${VER}\\3|g"
 
       # =========================
       # 🔹 DEPLOY TO OKLAHOST
