@@ -2,31 +2,30 @@ import { productos } from '../data/Data';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 // Components
-import ProductSearchBar from './ProductSearchBar';
+import SearchBar from './SearchBar';
 
-
-
-function Products() {
-
+const Products = () => {
+  const [searchTerm, setSearchTerm] = useState('');
   const [filteredProducts, setFilteredProducts] = useState(productos);
 
-  const handleProductSearch = (term) => {
-    const lowerCaseTerm = term.toLowerCase();
+  useEffect(() => {
     const results = productos.filter(product =>
-      product.name.toLowerCase().includes(lowerCaseTerm)
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredProducts(results);
-  };
+  }, [searchTerm, productos]);
 
+  
   return (
     <>
-      <ProductSearchBar onSearch={handleProductSearch} />
+      <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       <Row xs={1} md={4} className="g-4">
-        {productos.map((product, idx) => (
+        {filteredProducts.map((product, idx) => (
           <Col key={idx}>
             <Card className='card'>
               <Card.Img as={Image} fluid={true} src={product.img}/>
@@ -36,6 +35,7 @@ function Products() {
                   {product.descripcion}
                 </Card.Text>
               </Card.Body>
+              <Link to={`/products/${product.id}`}>Ver detalles</Link>
             </Card>
           </Col>
         ))}
