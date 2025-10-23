@@ -1,4 +1,4 @@
-// loginValidation.js
+
 
 // XSS Check to sanitize user input
 export const XSSCheck = (input) => {

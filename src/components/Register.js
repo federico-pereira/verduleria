@@ -1,21 +1,80 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import '../assets/styles/style.css';
+import { useNavigate } from 'react-router-dom';
+
+import { XSSCheck, validateRegistration } from '../assets/scripts/registerValidation';
+
 
 
 const Register = () => {
+
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        username: '',
+        firstName: '',
+        lastName: '',
+        email: '',
+        dob: '',
+        password: '',
+        repeatPassword: '',
+    });
+    const [resultMessage, setResultMessage] = useState('');
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value, // Dynamically set the field value
+        }));
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const sanitizedData = {
+            username: XSSCheck(formData.username),
+            firstName: XSSCheck(formData.firstName),
+            lastName: XSSCheck(formData.lastName),
+            email: XSSCheck(formData.email),
+            dob: new Date(formData.dob),
+            password: XSSCheck(formData.password),
+            repeatPassword: XSSCheck(formData.repeatPassword),
+        };
+
+        const validationResult = validateRegistration(
+            sanitizedData.username,
+            sanitizedData.firstName,
+            sanitizedData.lastName,
+            sanitizedData.email,
+            sanitizedData.dob,
+            sanitizedData.password,
+            sanitizedData.repeatPassword
+        );
+
+        setResultMessage(validationResult.message);
+
+        if (validationResult.isValid) {
+            setTimeout(() => {
+                navigate(('/'));
+            }, 5000);
+        }
+    };
+
     return (
         <Container>
             <div className="login-container" id="register">
                 <h2>Registro</h2>
-                <form id="register-form">
+                <form id="register-form" onSubmit={handleSubmit}>
                     <label htmlFor="username">Nombre de Usuario:</label>
                     <input
                         type="text"
                         name="username"
                         id="username"
                         placeholder="Nombre de usuario"
-                        required=""
+                        value={formData.username}
+                        onChange={handleChange}
+                        required
                     />
                     <label htmlFor="firstName">Nombre:</label>
                     <input
@@ -23,7 +82,9 @@ const Register = () => {
                         type="text"
                         name="firstName"
                         placeholder="Nombre"
-                        required=""
+                        value={formData.firstName}
+                        onChange={handleChange}
+                        required
                     />
                     <label htmlFor="lastName">Apellido:</label>
                     <input
@@ -31,7 +92,9 @@ const Register = () => {
                         type="text"
                         name="lastName"
                         placeholder="Apellido"
-                        required=""
+                        value={formData.lastName}
+                        onChange={handleChange}
+                        required
                     />
                     <label htmlFor="email">Email:</label>
                     <input
@@ -39,15 +102,18 @@ const Register = () => {
                         id="email"
                         name="email"
                         placeholder="Email"
-                        required=""
+                        value={formData.email}
+                        onChange={handleChange}
+                        required
                     />
                     <label htmlFor="start">Fecha de Nacimiento:</label>
                     <input
                         type="date"
                         id="birthday"
-                        name="birthday"
-                        defaultValue="2018-07-22"
-                        required=""
+                        name="dob"
+                        value={formData.dob}
+                        onChange={handleChange}
+                        required
                     /> <br/> <br/>
                     <label htmlFor="password">Contraseña:</label>
                     <input
@@ -55,7 +121,9 @@ const Register = () => {
                         id="password"
                         name="password"
                         placeholder="Contraseña"
-                        required=""
+                        value={formData.password}
+                        onChange={handleChange}
+                        required
                     />
                     <label htmlFor="repeatPassword">Repita Contraseña:</label>
                     <input
@@ -63,10 +131,16 @@ const Register = () => {
                         id="repeatPassword"
                         name="repeatPassword"
                         placeholder="Repita contraseña"
-                        required=""
+                        value={formData.repeatPassword}
+                        onChange={handleChange}
+                        required
                     />
                     <input type="submit" defaultValue="Registrar" placeholder='Registrar'/>
-                    <div id="result" />
+                    {resultMessage && (
+                        <div id="result" style={{ color: resultMessage.includes('Confirmado') ? 'green' : 'red' }}>
+                            {resultMessage}
+                        </div>
+                    )}
                 </form>
             </div>
 
