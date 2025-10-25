@@ -27,11 +27,13 @@
 /* Footer fix */
 .site {
   min-height: 100dvh;
-  display: grid;
+  display: flex;
   grid-template-rows: auto 1fr auto;
   grid-template-columns: minmax(0, 1fr);
   min-height: 100vh;
   padding-bottom: 3.5rem;
+  flex-direction: column;
+  justify-content: space-between; /* Ensure space between header, content, and footer */
 }
 
 body {
@@ -56,7 +58,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .section-header h2 {
@@ -111,6 +113,7 @@ body {
 .hero {
   background: #fff;
   border-bottom: 1px solid #eee;
+  margin-bottom: 3rem;
 }
 
 .hero-inner {
@@ -226,6 +229,7 @@ body {
   background: #fff;
   border: 1px solid #e6e6e6;
   padding: .45rem .7rem;
+  margin: 3px;
   border-radius: 999px;
   font-size: .9rem;
   text-decoration: none;
@@ -274,9 +278,11 @@ body {
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   margin: 10px 0;
-  /* Adds vertical space between cards */
   text-align: center;
-  font-family: arial;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .card-media {
@@ -298,8 +304,11 @@ body {
 
 .card-body {
   padding: .9rem 1rem 1.1rem;
-  display: grid;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: space-between; /* Distribute content evenly */
   gap: .35rem;
+  flex-grow: 1; /* Ensure the body grows to fill the available space */
 }
 
 .card-title {
@@ -332,15 +341,22 @@ body {
 
 /* --- Footer --- */
 .site-footer {
-  margin-top: 3rem;
   position: fixed;
   width: 100%;
+  height: 1.5rem;
   left: 0;
   bottom: 0;
   padding: 1.5rem 0;
   color: var(--text-2);
   background: #fff;
   border-top: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.le_fix {
+  margin-bottom: 4rem;
 }
 
 .footer-inner {
@@ -354,7 +370,7 @@ body {
 .login-container {
   background-color: white;
   margin: auto;
-  margin-top: 10%;
+  margin-top: 15rem;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

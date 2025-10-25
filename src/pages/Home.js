@@ -4,6 +4,7 @@ import '../assets/styles/style.css';
 
 // Components
 import Hero from '../components/Hero';
+import HeroProduct from '../components/HeroProduct';
 import Categories from '../components/Categories';
 import Products from '../components/Products';
 
@@ -12,8 +13,7 @@ export default function Home() {
         <>
             <Container>
                 <Hero />
-                <Categories />
-                <Products />
+                <HeroProduct />
             </Container>
         </>
     )
