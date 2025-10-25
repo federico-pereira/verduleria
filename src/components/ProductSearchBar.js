@@ -1,31 +1,22 @@
-import React, { useState } from 'react';
-import { Form, FormControl, Button } from 'react-bootstrap';
+// src/components/ProductSearchBar.js
+import React, { useEffect, useState } from 'react';
 
-function ProductSearchBar({ products, onSearch }) {
-  const [searchTerm, setSearchTerm] = useState('');
+export default function ProductSearchBar({ onSearch }) {
+  const [value, setValue] = useState('');
 
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleSearchSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission
-    onSearch(searchTerm); // Pass the search term to a parent component or handle filtering here
-  };
+  // Llamada con pequeño debounce
+  useEffect(() => {
+    const id = setTimeout(() => onSearch?.(value), 200);
+    return () => clearTimeout(id);
+  }, [value, onSearch]);
 
   return (
-    <Form className="d-flex" onSubmit={handleSearchSubmit}>
-      <FormControl
-        type="search"
-        placeholder="Search for products..."
-        className="me-2"
-        aria-label="Search"
-        value={searchTerm}
-        onChange={handleSearchChange}
-      />
-      <Button variant="outline-success" type="submit">Search</Button>
-    </Form>
+    <input
+      className="form-control mb-3"
+      type="search"
+      placeholder="Buscar producto..."
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+    />
   );
 }
-
-export default ProductSearchBar;

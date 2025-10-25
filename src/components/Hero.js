@@ -13,9 +13,6 @@ const Hero = () => {
                         Frutas, verduras y productos orgánicos seleccionados. Envíos a múltiples
                         ciudades de Chile.
                     </p>
-                    <a className="btn btn-primary" href="catalog/categories/fruits.html">
-                        Ver catálogo
-                    </a>
                 </div>
                 <div className="hero-media" role="img" aria-label="Productos frescos" />
             </div>
