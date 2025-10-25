@@ -24,6 +24,15 @@ const Login = () => {
         const validationResult = validateLogin(sanitizedUsername, sanitizedPassword);
 
         if (validationResult.isValid) {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.username === sanitizedUsername && u.password === sanitizedPassword);
+
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify({
+                username: user.username,
+                firstName: user.firstName,
+            }))};
+           
             setSuccessMessage(validationResult.message);
             setTimeout(() => {
                navigate(('/'));
@@ -31,7 +40,7 @@ const Login = () => {
         } else {
             setErrorMessage(validationResult.message);
         }
-    };
+        };
 
 
 

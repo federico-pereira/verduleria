@@ -18,24 +18,29 @@ export const validatePassword = (password) => {
     return passwordRegex.test(password);
 };
 
-// Example valid credentials (for demo purposes)
-export const validUsername = "admin";
-export const validPassword = "cosacosa1234";
 
 // Login validation function
 export const validateLogin = (username, password) => {
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+    if (users.length === 0) {
+        return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta"};
+    }
+
+    const user = users.find(u => u.username === username);
+
     if (!validateUsername(username)) {
-        return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta" };
+        return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta"};
     }
 
     if (!validatePassword(password)) {
-        return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta" };
+        return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta"};
     }
 
-    // Check if the credentials match
-    if (username === validUsername && password === validPassword) {
-        return { isValid: true, message: "Login valido, volviendo al menu principal" };
+    if (user.password !== password) {
+        return { isValid: false, message: "Login invalido, contraseña incorrecta" };
     }
 
-    return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta" };
+    return { isValid: true, message: "Login valido, volviendo al menu principal" };
+
 };

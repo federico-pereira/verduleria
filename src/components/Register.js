@@ -25,7 +25,7 @@ const Register = () => {
         const { name, value } = e.target;
         setFormData(prevState => ({
             ...prevState,
-            [name]: value, // Dynamically set the field value
+            [name]: value,
         }));
     };
 
@@ -55,6 +55,17 @@ const Register = () => {
         setResultMessage(validationResult.message);
 
         if (validationResult.isValid) {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            users.push({
+                username: sanitizedData.username,
+                firstName: sanitizedData.firstName,
+                lastName: sanitizedData.lastName,
+                email: sanitizedData.email,
+                dob: sanitizedData.dob,
+                password: sanitizedData.password, 
+            });
+            localStorage.setItem('users', JSON.stringify(users));
+
             setTimeout(() => {
                 navigate(('/'));
             }, 5000);
