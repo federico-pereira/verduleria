@@ -1,65 +1,61 @@
-import { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import React from 'react';
+import { Container, Dropdown, Badge, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import '../assets/styles/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Dropdown from 'react-bootstrap/Dropdown';
-import { useNavigate } from 'react-router-dom';
 
-const Navigation = () => {
-    const [user, setUser] = useState(null);
-    const navigate = useNavigate();
+export default function Navigation() {
+  const { count } = useCart();
+  const { user, logout } = useAuth();
 
-    useEffect(() => {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        setUser(currentUser);
-    }, []);
+  return (
+    <Container>
+      <header className="site-header">
+        <div className="container header-inner" style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+          <Link className="logo" to="/">
+            <img src={require('../assets/img/logo.jpg')} alt="HuertoHogar" />
+            <span>HuertoHogar</span>
+          </Link>
 
-    const handleLogout = () => {
-        localStorage.removeItem('currentUser');
-        setUser(null);
-        navigate('/');
-    };
+          <nav className="nav" style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            <Dropdown>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                Catálogo
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item as={Link} to="/">Frutas Frescas</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/">Verduras Orgánicas</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/">Productos Orgánicos</Dropdown.Item>
+                <Dropdown.Item as={Link} to="/">Productos Lácteos</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
 
-    useEffect(() => {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        setUser(currentUser);
-    }, [user]);
+            <Link to="/about">Nosotros</Link>
 
-    return (
-        <Container>
-            <header className="site-header">
-                <div className="container header-inner">
-                    <a className="logo" href="/">
-                        <img src={require('../assets/img/logo.jpg')} alt="HuertoHogar" />
-                        <span>HuertoHogar</span>
-                    </a>
-                    <nav className="nav">
-                        <Dropdown>
-                            <Dropdown.Toggle variant='success' id='dropdown-basic'>
-                                Catálogo
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <Dropdown.Item href='/'>Frutas Frescas</Dropdown.Item>
-                                <Dropdown.Item href='/'>Verduras Orgánicas</Dropdown.Item>
-                                <Dropdown.Item href='/'>Productos Orgánicos</Dropdown.Item>
-                                <Dropdown.Item href='/'>Productos Lácteos</Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
+            {!user ? (
+              <Link to="/login">Ingresar</Link>
+            ) : (
+              <>
+                <span className="text-muted">Hola, {user.name}</span>
+                <Button variant="outline-secondary" size="sm" onClick={logout}>
+                  Salir
+                </Button>
+              </>
+            )}
 
-                        <a href="/about">Nosotros</a>
-                        <a href="cart/index.html">Carrito</a>
-
-                        {/* Conditional rendering for Login/Logout */}
-                        {user ? (
-                            <a onClick={handleLogout}>Cerrar Sesión</a>
-                        ) : (
-                            <a href="/login">Ingresar</a>
-                        )}
-                    </nav>
-                </div>
-            </header>
-        </Container>
-    );
-};
-
-export default Navigation;
+            <Link to="/cart" className="position-relative">
+              Carrito{' '}
+              {count > 0 && (
+                <Badge bg="danger" pill className="position-absolute translate-middle" style={{ top: 0, right: -12 }}>
+                  {count}
+                </Badge>
+              )}
+            </Link>
+          </nav>
+        </div>
+      </header>
+    </Container>
+  );
+}
