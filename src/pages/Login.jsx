@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
@@ -47,6 +48,7 @@ export default function Login() {
               Entrar
             </Button>
           </Form>
+          <Link to='/register' className='link'>¿No tienes cuenta? Registrate</Link>
         </Card.Body>
       </Card>
     </div>
