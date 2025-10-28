@@ -33,30 +33,6 @@ jobs:
           CI=false npm run build
 
       # =========================
-      # 🔹 DEPLOY TO OKLAHOST (Optional)
-      # =========================
-      - name: Prepare SSH (oklahost)
-        run: |
-          mkdir -p "$HOME/.ssh"
-          echo "${{ secrets.DEPLOY_KEY }}" > "$HOME/.ssh/id_okla"
-          chmod 600 "$HOME/.ssh/id_okla"
-          ssh-keyscan -p 2222 oklahost.ddns.net >> "$HOME/.ssh/known_hosts"
-
-      - name: Deploy via rsync (oklahost)
-        env:
-          SSH_HOST: oklahost.ddns.net
-          SSH_PORT: "2222"
-          SSH_USER: deployer
-          LOCAL_PATH: ./build/
-          REMOTE_PATH: /www/verduleria/public/
-        run: |
-          rsync -azv --delete \
-            --chown=deployer:www-data \
-            --chmod=D755,F644 \
-            -e "ssh -i $HOME/.ssh/id_okla -p ${SSH_PORT}" \
-            "${LOCAL_PATH}" "${SSH_USER}@${SSH_HOST}:${REMOTE_PATH}"
-
-      # =========================
       # 🔹 DEPLOY TO AWS SERVER
       # =========================
       - name: Prepare SSH (AWS)
