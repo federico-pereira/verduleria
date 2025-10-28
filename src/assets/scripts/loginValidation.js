@@ -21,26 +21,31 @@ export const validatePassword = (password) => {
 
 // Login validation function
 export const validateLogin = (username, password) => {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
+  const users = JSON.parse(localStorage.getItem('users') || '[]');
 
-    if (users.length === 0) {
-        return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta"};
-    }
+  if (users.length === 0) {
+    return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta"};
+  }
 
-    const user = users.find(u => u.username === username);
+  const user = users.find(u => u.username === username);
 
-    if (!validateUsername(username)) {
-        return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta"};
-    }
+  if (!validateUsername(username)) {
+    return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta"};
+  }
 
-    if (!validatePassword(password)) {
-        return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta"};
-    }
+  if (!validatePassword(password)) {
+    return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta"};
+  }
 
-    if (user.password !== password) {
-        return { isValid: false, message: "Login invalido, contraseña incorrecta" };
-    }
+  // ✅ clave para no reventar y sumar cobertura de ramas
+  if (!user) {
+    return { isValid: false, message: "Login invalido, usuario y/o contraseña incorrecta" };
+  }
 
-    return { isValid: true, message: "Login valido, volviendo al menu principal" };
+  if (user.password !== password) {
+    return { isValid: false, message: "Login invalido, contraseña incorrecta" };
+  }
 
+  return { isValid: true, message: "Login valido, volviendo al menu principal" };
 };
+

@@ -2,7 +2,7 @@ name: Deploy Verduleria
 
 on:
   push:
-    branches: [ main ]
+    branches: [ node-react ]
 
 concurrency:
   group: deploy-verduleria
@@ -64,11 +64,11 @@ jobs:
           mkdir -p "$HOME/.ssh"
           echo "${{ secrets.DEPLOY_KEY_AWS }}" > "$HOME/.ssh/id_aws"
           chmod 600 "$HOME/.ssh/id_aws"
-          ssh-keyscan -p 22 98.81.244.154 >> "$HOME/.ssh/known_hosts"
+          ssh-keyscan -p 22 54.226.78.89 >> "$HOME/.ssh/known_hosts"
 
       - name: Deploy via rsync (AWS)
         env:
-          SSH_HOST: 98.81.244.154
+          SSH_HOST: 54.226.78.89
           SSH_PORT: "22"
           SSH_USER: ubuntu
           LOCAL_PATH: ./build/

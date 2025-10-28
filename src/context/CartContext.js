@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useEffect, useMemo, useReducer, useRef } from 'react';
 import { useAuth } from './AuthContext';
 
-const CartContext = createContext(null);
+export const CartContext = createContext(null);
 const BASE_KEY = 'cart';
 
 const initialState = { items: [] }; // [{id,name,precio,img,stock,qty}]

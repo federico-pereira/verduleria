@@ -45,7 +45,7 @@ export default function Carrito() {
                         onClick={() => updateQty(it.id, it.qty - 1)}
                         disabled={it.qty <= 1}
                       >
-                        −
+                        -
                       </Button>
                       <Button variant="light" disabled style={{ minWidth: 56 }}>
                         {it.qty}
