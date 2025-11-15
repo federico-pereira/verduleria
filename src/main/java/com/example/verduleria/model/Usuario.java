@@ -35,7 +35,7 @@ public class Usuario {
     @Column(nullable=false)
     private String email;
 
-    @Column(nullable=true)
+    @Column(nullable=false)
     private Date date;
     
     @Column(nullable=false)
@@ -45,14 +45,5 @@ public class Usuario {
     // @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false, updatable = true)
     // @JsonBackReference("role-usuario")
     // private Role role;
-
-    public Usuario(String userName, String firstName, String lastName, String email, Date date, String password) {
-        this.userName = userName;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.date = date;
-        this.password = password;
-    }
 
 }
