@@ -46,4 +46,12 @@ public class Usuario {
     // @JsonBackReference("role-usuario")
     // private Role role;
 
+    public Usuario(String userName, String firstName, String lastName, String email, Date date, String password) {
+        this.userName = userName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.date = date;
+        this.password = password;
+    }
 }
