@@ -26,7 +26,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 
 @RestController
-@RequestMapping("/api/sucursales")
+@RequestMapping("/api/sucursal")
 @Tag(name = "Sucursal", description = "Operaciones sucursal")
 public class SucursalController {
 
