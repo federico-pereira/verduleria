@@ -1,18 +1,28 @@
-// src/services/apiService.js
 import axiosInstance from './AxiosInstance';
 
-// Function to fetch all productos
+// GET ALL
 export const getProductos = async () => {
   try {
     const response = await axiosInstance.get('/productos');
     return response.data;
   } catch (error) {
     console.error('Error fetching productos', error);
-    throw error; // Rethrow error so the calling component can handle it
+    throw error;
   }
 };
 
-// Function to add a new producto
+// GET BY ID
+export const getProductoById = async (id) => {
+  try {
+    const response = await axiosInstance.get(`/productos/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching producto by ID', error);
+    throw error;
+  }
+};
+
+// ADD
 export const addProducto = async (newProducto) => {
   try {
     const response = await axiosInstance.post('/productos', newProducto);
@@ -23,7 +33,7 @@ export const addProducto = async (newProducto) => {
   }
 };
 
-// Function to update an existing producto
+// UPDATE
 export const updateProducto = async (id, updatedProducto) => {
   try {
     const response = await axiosInstance.put(`/productos/${id}`, updatedProducto);
@@ -34,7 +44,7 @@ export const updateProducto = async (id, updatedProducto) => {
   }
 };
 
-// Function to delete an producto
+// DELETE
 export const deleteProducto = async (id) => {
   try {
     const response = await axiosInstance.delete(`/productos/${id}`);

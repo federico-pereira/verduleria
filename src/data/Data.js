@@ -43,6 +43,7 @@ import Zanahoria1 from '../assets/img/zanahoria.jpg';
 import Zanahoria2 from '../assets/img/zanahoria2.jpg';
 import Zanahoria3 from '../assets/img/zanahoria3.jpg';
 
+
 export const productos = [
   {
     id: 0,
