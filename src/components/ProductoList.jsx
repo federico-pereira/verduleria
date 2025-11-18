@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getProductos } from '../services/ProductoService';
+import Table from 'react-bootstrap/Table';
 
 
 const ProductoList = () => {
 
-    const [producto, setProducto] = useState([]);
+    const [productos, setProductos] = useState([]);
 
     useEffect(() => {
     getProductos()
-      .then((productos) => setData(productos))
+      .then((productos) => setProductos(productos))
       .catch((error) => console.error('There was an error fetching the productos:', error));
   }, []);
 
@@ -25,7 +26,7 @@ const ProductoList = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((producto) => (
+          {productos.map((producto) => (
             <tr key={producto.id}>
               <td>{producto.id}</td>
               <td>{producto.nombre}</td>

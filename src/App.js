@@ -12,6 +12,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import About from './pages/About';
 import ProductDetail from './pages/ProductDetail';
+import ProductoList from './components/ProductoList';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/about" element={<About />} />
             <Route path="/cart" element={<Carrito />} />
+            <Route path="/productoList" element={<ProductoList />} />
             <Route path="/product/:id" element={<ProductDetail />} />   {/* ⬅️ nueva ruta */}
             <Route path="*" element={<div style={{ padding: '3rem 1rem' }}>Página no encontrada</div>} />
           </Routes>
