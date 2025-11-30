@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class SucursalController {
     private SucursalService sucursalService;
 
     @GetMapping
+    @PreAuthorize("permitAll()")
     @Operation(summary = "Ver lista sucursales", 
     responses = {
         @ApiResponse(responseCode = "200", description = "Lista sucursales"),
@@ -49,6 +51,7 @@ public class SucursalController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("permitAll()")
     @Operation(summary = "Encontrar sucursal especifica",
     responses = {
         @ApiResponse(responseCode = "200", description = "Sucursal encontrado"),
@@ -70,6 +73,7 @@ public class SucursalController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Agregar sucursal")
     public ResponseEntity<Sucursal> addSucursal(
         @RequestBody @Parameter(description = "Cuerpo a agregar") Sucursal sucursal
@@ -80,6 +84,7 @@ public class SucursalController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Actualizar sucursal")
     public ResponseEntity<Sucursal> updateSucursal(
         @Parameter(description = "ID del sucursal")@PathVariable Long id,
@@ -100,6 +105,7 @@ public class SucursalController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Eliminar sucursal")
     public ResponseEntity<?> deleteSucursal(
         @Parameter(description = "ID Sucursal") @PathVariable Long id

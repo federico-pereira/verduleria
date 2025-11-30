@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Ver lista usuarios", 
     responses = {
         @ApiResponse(responseCode = "200", description = "Lista usuarios"),
@@ -49,6 +51,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Encontrar usuario especifico",
     responses = {
         @ApiResponse(responseCode = "200", description = "Usuario encontrado"),
@@ -70,6 +73,7 @@ public class UsuarioController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Agregar usuario")
     public ResponseEntity<Usuario> addUsuario(
         @RequestBody @Parameter(description = "Cuerpo a agregar") Usuario usuario
@@ -80,6 +84,7 @@ public class UsuarioController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Actualizar usuario")
     public ResponseEntity<Usuario> updateUsuario(
         @Parameter(description = "ID del usuario")@PathVariable Long id,
@@ -100,6 +105,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Eliminar usuario")
     public ResponseEntity<?> deleteUsuario(
         @Parameter(description = "ID Usuario") @PathVariable Long id

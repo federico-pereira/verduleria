@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,7 @@ public class ProductoController {
     private ProductoService productoService;
 
     @GetMapping
+    @PreAuthorize("permitAll()")
     @Operation(summary = "Ver lista productos", 
     responses = {
         @ApiResponse(responseCode = "200", description = "Lista productos"),
@@ -49,6 +51,7 @@ public class ProductoController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("permitAll()")
     @Operation(summary = "Encontrar producto especifico",
     responses = {
         @ApiResponse(responseCode = "200", description = "Producto encontrado"),
@@ -70,6 +73,7 @@ public class ProductoController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Agregar producto")
     public ResponseEntity<Producto> addProducto(
         @RequestBody @Parameter(description = "Cuerpo a agregar") Producto producto
@@ -80,6 +84,7 @@ public class ProductoController {
     }
 
     @PutMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Actualizar producto")
     public ResponseEntity<Producto> updateProducto(
         @Parameter(description = "ID del producto")@PathVariable Long id,
@@ -105,6 +110,7 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Eliminar producto")
     public ResponseEntity<?> deleteProducto(
         @Parameter(description = "ID Producto") @PathVariable Long id
