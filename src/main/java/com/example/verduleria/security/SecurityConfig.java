@@ -34,7 +34,9 @@ public class SecurityConfig {
         http.cors(cors -> cors.configure(http)) // Enable CORS first
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**", "/doc/swagger-ui.html", "/doc/swagger-ui/**", "/swagger-ui/**",
+                                "/v3/api-docs/**")
+                        .permitAll()
                         .anyRequest().authenticated())
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
