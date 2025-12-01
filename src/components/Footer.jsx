@@ -5,8 +5,8 @@ import '../assets/styles/style.css';
 const Footing = () => {
     return (
         <Container>
-            <footer class="site-footer">
-                <div class="container footer-inner">
+            <footer className="site-footer">
+                <div className="container footer-inner">
                     <small>© 2025 HuertoHogar · Sitio académico</small>
                     <small><a href="about/index.html#mapa">Tiendas y mapa</a></small>
                 </div>

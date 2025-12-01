@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Card, Form } from 'react-bootstrap';
+import { Alert, Button, Card, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -9,14 +9,26 @@ export default function Login() {
   const { login } = useAuth();
   const { /* acceso para forzar carga/merge ya lo maneja CartProvider con efecto */ } = useCart();
   const nav = useNavigate();
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!email) return;
-    await login({ email, name });
-    nav('/');
+    if (!username || !password) return;
+
+    setError('');
+    setLoading(true);
+
+    try {
+      await login({ username, password });
+      nav('/');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error al iniciar sesión. Verifica tus credenciales.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -24,28 +36,32 @@ export default function Login() {
       <Card>
         <Card.Body>
           <Card.Title>Ingresar</Card.Title>
+          {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={onSubmit}>
             <Form.Group className="mb-3">
-              <Form.Label>Correo</Form.Label>
+              <Form.Label>Nombre de Usuario</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="usuario@correo.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="usuario"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
+                disabled={loading}
               />
             </Form.Group>
             <Form.Group className="mb-3">
-              <Form.Label>Nombre (opcional)</Form.Label>
+              <Form.Label>Contraseña</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Tu nombre"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                type="password"
+                placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={loading}
               />
             </Form.Group>
-            <Button type="submit" variant="success" className="w-100">
-              Entrar
+            <Button type="submit" variant="success" className="w-100" disabled={loading}>
+              {loading ? 'Ingresando...' : 'Entrar'}
             </Button>
           </Form>
           <Link to='/register' className='link'>¿No tienes cuenta? Registrate</Link>

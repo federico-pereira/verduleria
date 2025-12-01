@@ -13,6 +13,9 @@ import Register from './pages/Register';
 import About from './pages/About';
 import ProductDetail from './pages/ProductDetail';
 import ProductoList from './components/ProductoList';
+import AdminPanel from './pages/AdminPanel';
+import UserManagement from './pages/UserManagement';
+import ProductManagement from './pages/ProductManagement';
 
 export default function App() {
   return (
@@ -27,6 +30,9 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="/cart" element={<Carrito />} />
             <Route path="/productoList" element={<ProductoList />} />
+            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/admin/users" element={<UserManagement />} />
+            <Route path="/admin/products" element={<ProductManagement />} />
             <Route path="/product/:id" element={<ProductDetail />} />   {/* ⬅️ nueva ruta */}
             <Route path="*" element={<div style={{ padding: '3rem 1rem' }}>Página no encontrada</div>} />
           </Routes>

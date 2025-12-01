@@ -13,7 +13,7 @@ export default function Navigation() {
   return (
     <Container>
       <header className="site-header">
-        <div className="container header-inner" style={{ display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+        <div className="container header-inner" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Link className="logo" to="/">
             <img src={require('../assets/img/logo.jpg')} alt="HuertoHogar" />
             <span>HuertoHogar</span>
@@ -32,13 +32,15 @@ export default function Navigation() {
               </Dropdown.Menu>
             </Dropdown>
 
+            {user?.role === 'ADMIN' && <Link to="/admin">Admin</Link>}
+
             <Link to="/about">Nosotros</Link>
 
             {!user ? (
               <Link to="/login">Ingresar</Link>
             ) : (
               <>
-                <span className="text-muted">Hola, {user.name}</span>
+                <span className="text-muted">{user.username}</span>
                 <Button variant="outline-secondary" size="sm" onClick={logout}>
                   Salir
                 </Button>
