@@ -12,7 +12,7 @@ function loadCart(key, fallback = initialState) {
   try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch { return fallback; }
 }
 function saveCart(key, state) {
-  try { localStorage.setItem(key, JSON.stringify(state)); } catch {}
+  try { localStorage.setItem(key, JSON.stringify(state)); } catch { }
 }
 function mergeItems(a, b) {
   const map = new Map();
@@ -40,10 +40,12 @@ function reducer(state, action) {
         const newQty = Math.min(existing.qty + qty, max);
         return { ...state, items: state.items.map(i => i.id === product.id ? { ...i, qty: newQty } : i) };
       }
-      return { ...state, items: [...state.items, {
-        id: product.id, name: product.name, precio: product.precio,
-        img: product.img, stock: product.stock ?? Infinity, qty: Math.min(qty, max),
-      }]};
+      return {
+        ...state, items: [...state.items, {
+          id: product.id, name: product.name, precio: product.precio,
+          img: product.img, stock: product.stock ?? Infinity, qty: Math.min(qty, max),
+        }]
+      };
     }
 
     case 'UPDATE_QTY': {
@@ -57,7 +59,7 @@ function reducer(state, action) {
     }
 
     case 'REMOVE': return { ...state, items: state.items.filter(i => i.id !== action.payload.id) };
-    case 'CLEAR':  return initialState;
+    case 'CLEAR': return initialState;
     default: return state;
   }
 }
@@ -73,7 +75,7 @@ export function CartProvider({ children }) {
     const isLogout = prevUser && !user;
 
     const guestKey = keyForUser(null);
-    const userKey  = keyForUser(user);
+    const userKey = keyForUser(user);
 
     if (isLogin) {
       const guest = loadCart(guestKey, initialState);
@@ -83,10 +85,9 @@ export function CartProvider({ children }) {
       saveCart(userKey, merged);
       // opcional: limpiar invitado: saveCart(guestKey, initialState);
     } else if (isLogout) {
-      const currentKey = keyForUser(prevUser);
-      const current = loadCart(currentKey, initialState);
-      saveCart(guestKey, current);
-      dispatch({ type: 'INIT', payload: current });
+      // Flush cart on logout
+      dispatch({ type: 'CLEAR' });
+      saveCart(guestKey, initialState);
     } else {
       // primera carga o cambio entre usuarios
       const loaded = loadCart(userKey, initialState);
@@ -99,13 +100,13 @@ export function CartProvider({ children }) {
   useEffect(() => {
     const key = keyForUser(user);
     saveCart(key, state);
-  }, [state, user]);
+  }, [state]); // Removed user to prevent saving old state to new user key
 
   // API pública
-  const addItem   = (product, qty = 1) => dispatch({ type: 'ADD',        payload: { product, qty } });
-  const updateQty = (id, qty)          => dispatch({ type: 'UPDATE_QTY', payload: { id, qty } });
-  const removeItem= (id)               => dispatch({ type: 'REMOVE',     payload: { id } });
-  const clearCart = ()                 => dispatch({ type: 'CLEAR' });
+  const addItem = (product, qty = 1) => dispatch({ type: 'ADD', payload: { product, qty } });
+  const updateQty = (id, qty) => dispatch({ type: 'UPDATE_QTY', payload: { id, qty } });
+  const removeItem = (id) => dispatch({ type: 'REMOVE', payload: { id } });
+  const clearCart = () => dispatch({ type: 'CLEAR' });
 
   const count = useMemo(() => state.items.reduce((acc, it) => acc + it.qty, 0), [state.items]);
   const subtotal = useMemo(() => state.items.reduce((a, it) => a + it.precio * it.qty, 0), [state.items]);

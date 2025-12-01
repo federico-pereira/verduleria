@@ -1,11 +1,26 @@
 import React from 'react';
 import { Table, Button, ButtonGroup, Image, Row, Col, Card } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
 const CLP = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' });
 
 export default function Carrito() {
   const { items, updateQty, removeItem, clearCart, subtotal } = useCart();
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    console.log('Checkout clicked. User:', user);
+    if (!user) {
+      console.log('Redirecting to login...');
+      navigate('/login');
+      return;
+    }
+    // Future payment logic here
+    alert('Procesando pago...');
+  };
 
   if (!items || items.length === 0) {
     return <p className="container py-4">Tu carrito está vacío.</p>;
@@ -19,10 +34,10 @@ export default function Carrito() {
             <thead>
               <tr>
                 <th>Producto</th>
-                <th style={{width: 120}}>Precio</th>
-                <th style={{width: 170}}>Cantidad</th>
-                <th style={{width: 140}}>Total</th>
-                <th style={{width: 80}}></th>
+                <th style={{ width: 120 }}>Precio</th>
+                <th style={{ width: 170 }}>Cantidad</th>
+                <th style={{ width: 140 }}>Total</th>
+                <th style={{ width: 80 }}></th>
               </tr>
             </thead>
             <tbody>
@@ -85,7 +100,7 @@ export default function Carrito() {
               </div>
               <hr />
               <div className="d-grid">
-                <Button variant="success">Proceder al pago</Button>
+                <Button variant="success" onClick={handleCheckout}>Proceder al pago</Button>
               </div>
             </Card.Body>
           </Card>
