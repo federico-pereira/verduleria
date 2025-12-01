@@ -1,6 +1,5 @@
 package com.example.verduleria.controller;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +24,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-
 @RestController
 @RequestMapping("/api/productos")
 @Tag(name = "Producto", description = "Operaciones producto")
@@ -36,10 +34,9 @@ public class ProductoController {
 
     @GetMapping
     @PreAuthorize("permitAll()")
-    @Operation(summary = "Ver lista productos", 
-    responses = {
-        @ApiResponse(responseCode = "200", description = "Lista productos"),
-        @ApiResponse(responseCode = "204", description = "No hay productos disponibles")
+    @Operation(summary = "Ver lista productos", responses = {
+            @ApiResponse(responseCode = "200", description = "Lista productos"),
+            @ApiResponse(responseCode = "204", description = "No hay productos disponibles")
     })
     public ResponseEntity<List<Producto>> findAllProductos() {
         List<Producto> productos = productoService.findAllProductos();
@@ -52,14 +49,12 @@ public class ProductoController {
 
     @GetMapping("/{id}")
     @PreAuthorize("permitAll()")
-    @Operation(summary = "Encontrar producto especifico",
-    responses = {
-        @ApiResponse(responseCode = "200", description = "Producto encontrado"),
-        @ApiResponse(responseCode = "404", description = "Producto no encontrado")
+    @Operation(summary = "Encontrar producto especifico", responses = {
+            @ApiResponse(responseCode = "200", description = "Producto encontrado"),
+            @ApiResponse(responseCode = "404", description = "Producto no encontrado")
     })
     public ResponseEntity<Producto> findProductoById(
-        @Parameter(description = "ID del producto")@PathVariable Long id
-        ) {
+            @Parameter(description = "ID del producto") @PathVariable Long id) {
         Optional<Producto> productoOpt = productoService.findProductoById(id);
 
         if (productoOpt.isPresent()) {
@@ -69,52 +64,39 @@ public class ProductoController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Agregar producto")
     public ResponseEntity<Producto> addProducto(
-        @RequestBody @Parameter(description = "Cuerpo a agregar") Producto producto
-        ) {
+            @RequestBody @Parameter(description = "Cuerpo a agregar") Producto producto) {
         productoService.saveProducto(producto);
         return new ResponseEntity<>(producto, HttpStatus.CREATED);
-        
+
     }
 
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Actualizar producto")
     public ResponseEntity<Producto> updateProducto(
-        @Parameter(description = "ID del producto")@PathVariable Long id,
-        @RequestBody @Parameter(description = "Cuerpo actualizar") Producto updatedProducto
-        ) {
+            @Parameter(description = "ID del producto") @PathVariable Long id,
+            @RequestBody @Parameter(description = "Cuerpo actualizar") Producto updatedProducto) {
 
-        Optional<Producto> existingProductoOpt = productoService.findProductoById(id);
+        Producto savedProducto = productoService.updateProducto(id, updatedProducto);
 
-        if (existingProductoOpt.isPresent()) {
-            Producto existingProducto = existingProductoOpt.get();
-            existingProducto.setNombre(updatedProducto.getNombre());
-            existingProducto.setDescripcion(updatedProducto.getDescripcion());
-            existingProducto.setPrecio(updatedProducto.getPrecio());
-            existingProducto.setStock(updatedProducto.getStock());
-            existingProducto.setImageUrl(updatedProducto.getImageUrl());
-
-            Producto savedProducto = productoService.saveProducto(existingProducto);
-            return new ResponseEntity<>(savedProducto, HttpStatus.OK);
-            
-        } else {
+        if (savedProducto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
+        return new ResponseEntity<>(savedProducto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(summary = "Eliminar producto")
     public ResponseEntity<?> deleteProducto(
-        @Parameter(description = "ID Producto") @PathVariable Long id
-        ) {
+            @Parameter(description = "ID Producto") @PathVariable Long id) {
         try {
             productoService.deleteById(id);
             return ResponseEntity.noContent().build();
