@@ -8,7 +8,7 @@ export default function AdminPanel() {
     const { user } = useAuth();
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
-    const [roles, setRoles] = useState([{ id: 1, name: 'ADMIN' }, { id: 2, name: 'USER' }]);
+    const [roles] = useState([{ id: 1, name: 'ADMIN' }, { id: 2, name: 'USER' }]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [showModal, setShowModal] = useState(false);

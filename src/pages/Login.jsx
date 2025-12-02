@@ -3,11 +3,9 @@ import { Alert, Button, Card, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { useCart } from '../context/CartContext';
 
 export default function Login() {
   const { login } = useAuth();
-  const { /* acceso para forzar carga/merge ya lo maneja CartProvider con efecto */ } = useCart();
   const nav = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

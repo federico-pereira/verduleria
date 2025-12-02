@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer, Container } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 import '../assets/styles/style.css';
 
 const Footing = () => {

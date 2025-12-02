@@ -100,7 +100,7 @@ export function CartProvider({ children }) {
   useEffect(() => {
     const key = keyForUser(user);
     saveCart(key, state);
-  }, [state]); // Removed user to prevent saving old state to new user key
+  }, [user]);
 
   // API pública
   const addItem = (product, qty = 1) => dispatch({ type: 'ADD', payload: { product, qty } });

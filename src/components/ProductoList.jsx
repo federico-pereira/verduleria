@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { getProductos } from '../services/ProductoService';
 import Table from 'react-bootstrap/Table';
 
 
 const ProductoList = () => {
 
-    const [productos, setProductos] = useState([]);
+  const [productos, setProductos] = useState([]);
 
-    useEffect(() => {
+  useEffect(() => {
     getProductos()
       .then((productos) => setProductos(productos))
       .catch((error) => console.error('There was an error fetching the productos:', error));
   }, []);
 
-    return (
+  return (
     <div className="container">
       <h1>My App</h1>
       <Table striped bordered hover>
