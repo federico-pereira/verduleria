@@ -100,7 +100,7 @@ export function CartProvider({ children }) {
   useEffect(() => {
     const key = keyForUser(user);
     saveCart(key, state);
-  }, [user]);
+  }, [user, state]);
 
   // API pública
   const addItem = (product, qty = 1) => dispatch({ type: 'ADD', payload: { product, qty } });
