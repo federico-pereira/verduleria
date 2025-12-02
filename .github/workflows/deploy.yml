@@ -37,13 +37,29 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            # Stop existing process safely
-            pid=$(pgrep -f "verduleria-0.0.1-SNAPSHOT.jar")
-            if [ -n "$pid" ]; then
-              kill -9 $pid
-            fi
+            # Create systemd service file
+            sudo bash -c 'cat > /etc/systemd/system/verduleria.service <<EOF
+            [Unit]
+            Description=Verduleria Backend
+            After=syslog.target network.target mariadb.service
+
+            [Service]
+            User=${{ secrets.EC2_USER }}
+            ExecStart=/usr/bin/java -jar /home/${{ secrets.EC2_USER }}/backend/target/verduleria-0.0.1-SNAPSHOT.jar
+            SuccessExitStatus=143
+            Restart=always
+            RestartSec=5
+            StandardOutput=file:/home/${{ secrets.EC2_USER }}/app.log
+            StandardError=inherit
+
+            [Install]
+            WantedBy=multi-user.target
+            EOF'
+
+            # Reload systemd and restart app
+            sudo systemctl daemon-reload
+            sudo systemctl enable verduleria
+            sudo systemctl restart verduleria
             
-            # Start new process with double-fork to ensure SSH exit
-            nohup sh -c 'java -jar /home/${{ secrets.EC2_USER }}/backend/target/verduleria-0.0.1-SNAPSHOT.jar > /home/${{ secrets.EC2_USER }}/app.log 2>&1' > /dev/null 2>&1 &
-            echo "Deployment started successfully"
-            exit
+            # Check status (optional, but good for logs)
+            sudo systemctl status verduleria --no-pager
