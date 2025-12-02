@@ -24,8 +24,7 @@ public class DatabaseStartup {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    // Temporarily disabled to test if this is causing startup issues
-    // @EventListener(ApplicationReadyEvent.class)
+    @org.springframework.context.event.EventListener(org.springframework.boot.context.event.ApplicationReadyEvent.class)
     public void populateDatabase() {
 
         System.out.println("Agregando detalles (sin duplicados)...");
