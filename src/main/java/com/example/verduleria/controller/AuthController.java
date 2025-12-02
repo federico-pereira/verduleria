@@ -66,7 +66,7 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    @Operation(summary = "API de autenticación login", responses = {
+    @Operation(summary = "Api de gestión y permiso", responses = {
         @ApiResponse(responseCode = "200", description = "Autenticado"),
         @ApiResponse(responseCode = "400", description = "Solicitud incorrecta o sintaxis invalida"),
         @ApiResponse(responseCode = "401", description = "No autorizado o credenciales invalidas"),
