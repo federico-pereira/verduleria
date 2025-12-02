@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:9090/api', // Replace with your backend's base URL
+  baseURL: '/api', // Relative path for Nginx proxy
   headers: {
     'Content-Type': 'application/json'
   }
