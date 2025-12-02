@@ -42,22 +42,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        String token = header.substring(7);
-        String username = jwtUtil.extractUsername(token);
+        try {
+            String token = header.substring(7);
+            String username = jwtUtil.extractUsername(token);
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            if (jwtUtil.isTokenValid(token)) {
-                // Load full UserDetails including authorities (roles)
-                var userDetails = userDetailsService.loadUserByUsername(username);
+                if (jwtUtil.isTokenValid(token)) {
+                    // Load full UserDetails including authorities (roles)
+                    var userDetails = userDetailsService.loadUserByUsername(username);
 
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails, null, userDetails.getAuthorities());
 
-                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                SecurityContextHolder.getContext().setAuthentication(authToken);
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
             }
+        } catch (Exception e) {
+            System.out.println("JWT Verification Failed: " + e.getMessage());
+            // Do not throw, just continue. This allows permitAll endpoints to work.
         }
 
         filterChain.doFilter(request, response);
